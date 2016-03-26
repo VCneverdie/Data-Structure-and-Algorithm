@@ -114,13 +114,16 @@ public class HashMapLinearChaining
 		else // exist and collision
 		{
 			this.used--;
-			count = countCollision(count);
+			count++;
 			Chain entry = table[code];
 			while (entry.getNext() != null) // exist in chain
 			{
 				entry = entry.getNext();
-				count = countCollision(count);
+				count++;
 			}
+			if (count > 10)
+				count = 10;
+			hist[count]++;
 			entry.setNext(new Chain(key, word)); // come next chain node and add in chain
 		}
 	}
@@ -137,15 +140,6 @@ public class HashMapLinearChaining
 				break;
 		}
 		return false;
-	}
-	
-	public int countCollision(int count)
-	{
-		count++;
-		if (count > 10)
-			count = 10;
-		hist[count]++;
-		return count;
 	}
 	
 	public static void main(String[] args) throws Exception
